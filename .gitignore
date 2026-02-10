@@ -1,3 +1,9 @@
+# --- Environment secrets ---
+.env
+.env.*
+infra/.env
+infra/.env.*
+
 # --- IDEs ---
 .idea/
 *.iml

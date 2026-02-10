@@ -1,0 +1,22 @@
+# ============================================================
+# PRODUCTION OVERRIDE (EC2 + RDS) — no Postgres containers
+#
+# USAGE: docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file .env.prod up -d
+# ============================================================
+
+services:
+  # ---------- Override app services: point to single RDS instance ----------
+  product-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${RDS_HOST}:5432/${PRODUCT_DB_NAME}?stringtype=unspecified
+
+  cart-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${RDS_HOST}:5432/${CART_DB_NAME}
+
+  user-service:
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${RDS_HOST}:5432/${USER_DB_NAME}?stringtype=unspecified
+
+  # No Postgres containers — RDS handles databases
+  # No Prometheus/Grafana/pgAdmin — saves EC2 resources
