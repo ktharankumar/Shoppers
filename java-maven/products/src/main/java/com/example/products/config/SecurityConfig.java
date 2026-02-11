@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -16,12 +15,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)      // No CSRF for REST
-                .cors(Customizer.withDefaults())  // Allow CORS
+                .csrf(AbstractHttpConfigurer::disable) // No CSRF for REST
+                .cors(Customizer.withDefaults()) // Allow CORS
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()
-                        .anyRequest().authenticated()
-                );
+                        .anyRequest().permitAll());
 
         return http.build();
     }
